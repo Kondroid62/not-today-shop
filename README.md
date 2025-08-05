@@ -1,3 +1,15 @@
+# Not Today Shop
+
+This is a spending tracker app that helps you record items you resisted buying today. It allows you to track how much money you've saved by not making impulse purchases, and can also serve as a wishlist for future purchases when you've saved enough.
+
+## What's this project?
+
+Not Today Shop is an app designed to help you build better spending habits by:
+- Recording items you wanted to buy but chose not to
+- Tracking the cumulative amount of money saved
+- Creating a wishlist of items you might purchase in the future
+- Visualizing your savings progress over time
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
