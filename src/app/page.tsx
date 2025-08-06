@@ -87,7 +87,7 @@ export default function Home() {
             Not Today Shop
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Track what you didn't buy and watch your savings grow!
+            Track what you didn&apos;t buy and watch your savings grow!
           </p>
         </header>
 
