@@ -7,6 +7,7 @@ interface SavedItem {
   itemName: string;
   price: number;
   category: string;
+  url?: string;
   date: string;
 }
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
+  const [url, setUrl] = useState("");
   const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
   const [totalSavings, setTotalSavings] = useState(0);
 
@@ -53,6 +55,7 @@ export default function Home() {
       itemName,
       price: parseFloat(price),
       category,
+      url: url || undefined,
       date: new Date().toISOString()
     };
 
@@ -64,6 +67,7 @@ export default function Home() {
     setItemName("");
     setPrice("");
     setCategory(CATEGORIES[0]);
+    setUrl("");
   };
 
   const formatDate = (dateString: string) => {
@@ -108,6 +112,20 @@ export default function Home() {
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                 placeholder="e.g., Coffee, New shoes, Video game"
                 required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Product URL
+              </label>
+              <input
+                type="url"
+                id="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                placeholder="https://example.com/product"
               />
             </div>
 
@@ -169,9 +187,24 @@ export default function Home() {
                   className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md"
                 >
                   <div className="flex-1">
-                    <h3 className="font-medium text-gray-900 dark:text-white">
-                      {item.itemName}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-medium text-gray-900 dark:text-white">
+                        {item.itemName}
+                      </h3>
+                      {item.url && (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                          title="View product"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {item.category} • {formatDate(item.date)}
                     </p>
