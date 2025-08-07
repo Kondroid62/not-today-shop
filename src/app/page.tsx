@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { generateTrackId, saveItem, getItemsByTrackId } from "@/lib/api";
 
 interface SavedItem {
   id: string;
@@ -30,44 +31,79 @@ export default function Home() {
   const [url, setUrl] = useState("");
   const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
   const [totalSavings, setTotalSavings] = useState(0);
+  const [trackId, setTrackId] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const storedItems = sessionStorage.getItem("notTodayShopItems");
-    if (storedItems) {
-      const items = JSON.parse(storedItems);
-      setSavedItems(items);
-      calculateTotalSavings(items);
+    // Get or generate track_id
+    let existingTrackId = localStorage.getItem("notTodayShopTrackId");
+    if (!existingTrackId) {
+      existingTrackId = generateTrackId();
+      localStorage.setItem("notTodayShopTrackId", existingTrackId);
     }
+    setTrackId(existingTrackId);
+    
+    // Fetch items from Supabase
+    fetchItems(existingTrackId);
   }, []);
+  
+  const fetchItems = async (trackId: string) => {
+    try {
+      setLoading(true);
+      const items = await getItemsByTrackId(trackId);
+      const formattedItems = items.map((item: any) => ({
+        id: item.id,
+        itemName: item.name,
+        price: item.price,
+        category: item.category || "Other",
+        url: item.url,
+        date: item.saved_at
+      }));
+      setSavedItems(formattedItems);
+      calculateTotalSavings(formattedItems);
+    } catch (error) {
+      console.error("Error fetching items:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const calculateTotalSavings = (items: SavedItem[]) => {
     const total = items.reduce((sum, item) => sum + item.price, 0);
     setTotalSavings(total);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!itemName || !price) return;
-
-    const newItem: SavedItem = {
-      id: Date.now().toString(),
-      itemName,
-      price: parseFloat(price),
-      category,
-      url: url || undefined,
-      date: new Date().toISOString()
-    };
-
-    const updatedItems = [...savedItems, newItem];
-    setSavedItems(updatedItems);
-    sessionStorage.setItem("notTodayShopItems", JSON.stringify(updatedItems));
-    calculateTotalSavings(updatedItems);
-
-    setItemName("");
-    setPrice("");
-    setCategory(CATEGORIES[0]);
-    setUrl("");
+    if (!itemName || !price || !trackId) return;
+    
+    try {
+      setLoading(true);
+      
+      // Save to Supabase
+      await saveItem({
+        track_id: trackId,
+        name: itemName,
+        price: parseFloat(price),
+        category,
+        url: url || undefined
+      });
+      
+      // Refresh items from Supabase
+      await fetchItems(trackId);
+      
+      // Clear form
+      setItemName("");
+      setPrice("");
+      setCategory(CATEGORIES[0]);
+      setUrl("");
+    } catch (error) {
+      console.error("Error saving item:", error);
+      alert("Failed to save item. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -168,14 +204,21 @@ export default function Home() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-medium"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Add to Savings
+              {loading ? "Saving..." : "Add to Savings"}
             </button>
           </form>
         </div>
 
-        {savedItems.length > 0 && (
+        {loading && (
+          <div className="text-center py-8">
+            <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          </div>
+        )}
+        
+        {!loading && savedItems.length > 0 && (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Items You Resisted
