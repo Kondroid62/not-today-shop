@@ -12,6 +12,15 @@ interface SavedItem {
   date: string;
 }
 
+interface SupabaseItem {
+  id: string;
+  name: string;
+  price: number;
+  category?: string;
+  url?: string;
+  saved_at: string;
+}
+
 const CATEGORIES = [
   "Food & Drinks",
   "Clothing",
@@ -44,14 +53,35 @@ export default function Home() {
     setTrackId(existingTrackId);
     
     // Fetch items from Supabase
-    fetchItems(existingTrackId);
+    const fetchInitialItems = async () => {
+      try {
+        setLoading(true);
+        const items = await getItemsByTrackId(existingTrackId!);
+        const formattedItems = items.map((item: SupabaseItem) => ({
+          id: item.id,
+          itemName: item.name,
+          price: item.price,
+          category: item.category || "Other",
+          url: item.url,
+          date: item.saved_at
+        }));
+        setSavedItems(formattedItems);
+        calculateTotalSavings(formattedItems);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchInitialItems();
   }, []);
   
   const fetchItems = async (trackId: string) => {
     try {
       setLoading(true);
       const items = await getItemsByTrackId(trackId);
-      const formattedItems = items.map((item: any) => ({
+      const formattedItems = items.map((item: SupabaseItem) => ({
         id: item.id,
         itemName: item.name,
         price: item.price,
