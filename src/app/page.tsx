@@ -76,7 +76,7 @@ export default function Home() {
     // Fetch items from Supabase
     fetchItems(existingTrackId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchItems]);
 
   const calculateTotalSavings = (items: SavedItem[]) => {
     const total = items.reduce((sum, item) => sum + item.price, 0);
