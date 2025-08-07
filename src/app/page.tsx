@@ -43,44 +43,10 @@ export default function Home() {
   const [trackId, setTrackId] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Get or generate track_id
-    let existingTrackId = localStorage.getItem("notTodayShopTrackId");
-    if (!existingTrackId) {
-      existingTrackId = generateTrackId();
-      localStorage.setItem("notTodayShopTrackId", existingTrackId);
-    }
-    setTrackId(existingTrackId);
-    
-    // Fetch items from Supabase
-    const fetchInitialItems = async () => {
-      try {
-        setLoading(true);
-        const items = await getItemsByTrackId(existingTrackId!);
-        const formattedItems = items.map((item: SupabaseItem) => ({
-          id: item.id,
-          itemName: item.name,
-          price: item.price,
-          category: item.category || "Other",
-          url: item.url,
-          date: item.saved_at
-        }));
-        setSavedItems(formattedItems);
-        calculateTotalSavings(formattedItems);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchInitialItems();
-  }, []);
-  
-  const fetchItems = async (trackId: string) => {
+  const fetchItems = async (trackIdParam: string) => {
     try {
       setLoading(true);
-      const items = await getItemsByTrackId(trackId);
+      const items = await getItemsByTrackId(trackIdParam);
       const formattedItems = items.map((item: SupabaseItem) => ({
         id: item.id,
         itemName: item.name,
@@ -97,6 +63,20 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Get or generate track_id
+    let existingTrackId = localStorage.getItem("notTodayShopTrackId");
+    if (!existingTrackId) {
+      existingTrackId = generateTrackId();
+      localStorage.setItem("notTodayShopTrackId", existingTrackId);
+    }
+    setTrackId(existingTrackId);
+    
+    // Fetch items from Supabase
+    fetchItems(existingTrackId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const calculateTotalSavings = (items: SavedItem[]) => {
     const total = items.reduce((sum, item) => sum + item.price, 0);
