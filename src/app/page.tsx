@@ -135,6 +135,9 @@ export default function Home() {
           <p className="text-gray-600 dark:text-gray-400">
             Track what you didn&apos;t buy and watch your savings grow!
           </p>
+          <p className="text-xs text-gray-400 mt-2">
+            Your Trace ID: <span className="font-mono">{trackId}</span>
+          </p>
         </header>
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
