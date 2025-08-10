@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { generateTrackId, saveItem, getItemsByTrackId } from "@/lib/api";
+import TrackIdManager from "@/components/TrackIdManager";
 
 interface SavedItem {
   id: string;
@@ -78,6 +79,14 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // 初回のみ実行
 
+  const handleTrackIdChange = (newTrackId: string | null) => {
+    if (newTrackId) {
+      setTrackId(newTrackId);
+      localStorage.setItem("notTodayShopTrackId", newTrackId);
+      fetchItems(newTrackId);
+    }
+  };
+
   const calculateTotalSavings = (items: SavedItem[]) => {
     const total = items.reduce((sum, item) => sum + item.price, 0);
     setTotalSavings(total);
@@ -135,10 +144,9 @@ export default function Home() {
           <p className="text-gray-600 dark:text-gray-400">
             Track what you didn&apos;t buy and watch your savings grow!
           </p>
-          <p className="text-xs text-gray-400 mt-2">
-            Your Trace ID: <span className="font-mono">{trackId}</span>
-          </p>
         </header>
+
+        <TrackIdManager onTrackIdChange={handleTrackIdChange} />
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
           <div className="text-center mb-6">
@@ -234,7 +242,7 @@ export default function Home() {
         {!loading && savedItems.length > 0 && (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Items You Resisted
+              Items You Resisted Buying
             </h2>
             <div className="space-y-3">
               {savedItems.slice().reverse().map((item) => (
