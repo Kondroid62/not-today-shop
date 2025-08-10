@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { generateTrackId, saveItem, getItemsByTrackId } from "@/lib/api";
+import { saveItem, getItemsByTrackId } from "@/lib/api";
 import TrackIdManager from "@/components/TrackIdManager";
 
 interface SavedItem {
@@ -66,23 +66,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Get or generate track_id
-    let existingTrackId = localStorage.getItem("notTodayShopTrackId");
-    if (!existingTrackId) {
-      existingTrackId = generateTrackId();
-      localStorage.setItem("notTodayShopTrackId", existingTrackId);
-    }
-    setTrackId(existingTrackId);
-    
-    // Fetch items from Supabase
-    fetchItems(existingTrackId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // 初回のみ実行
+    // TrackIdManagerが初期化を行うので、ここでは何もしない
+    // TrackIdはTrackIdManagerのonTrackIdChangeで設定される
+  }, []);
 
   const handleTrackIdChange = (newTrackId: string | null) => {
     if (newTrackId) {
       setTrackId(newTrackId);
-      localStorage.setItem("notTodayShopTrackId", newTrackId);
       fetchItems(newTrackId);
     }
   };
