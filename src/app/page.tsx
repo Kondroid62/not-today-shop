@@ -142,7 +142,7 @@ export default function Home() {
           <div className="text-center mb-6">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Total Saved</p>
             <p className="text-4xl font-bold text-green-600 dark:text-green-400">
-              ${totalSavings.toFixed(2)}
+              ¥{totalSavings}
             </p>
           </div>
 
@@ -178,22 +178,29 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="price"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Price
                 </label>
-                <input
-                  type="number"
-                  id="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="0.00"
-                  step="0.01"
-                  min="0"
-                  required
-                />
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-300">
+                    ¥
+                  </span>
+                  <input
+                    type="number"
+                    id="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    className="w-full pl-7 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    placeholder="0"
+                    step="1"
+                    min="0"
+                    required
+                  />
+                </div>
               </div>
-
               <div>
                 <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Category
@@ -264,7 +271,7 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="text-green-600 dark:text-green-400 font-medium">
-                    ${item.price.toFixed(2)}
+                    ¥{item.price}
                   </div>
                 </div>
               ))}
