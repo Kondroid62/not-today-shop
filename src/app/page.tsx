@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { saveItem, getItemsByTrackId } from "@/lib/api";
 import TrackIdManager from "@/components/TrackIdManager";
+import Link from "next/link";
 
 interface SavedItem {
   id: string;
@@ -73,6 +74,7 @@ export default function Home() {
   const handleTrackIdChange = (newTrackId: string | null) => {
     if (newTrackId) {
       setTrackId(newTrackId);
+      sessionStorage.setItem('trackId', newTrackId);
       fetchItems(newTrackId);
     }
   };
@@ -239,10 +241,10 @@ export default function Home() {
         {!loading && savedItems.length > 0 && (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Items You Resisted Buying
+              Recent Items You Resisted Buying
             </h2>
             <div className="space-y-3">
-              {savedItems.slice().reverse().map((item) => (
+              {savedItems.slice(0, 5).map((item) => (
                 <div
                   key={item.id}
                   className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md"
@@ -276,6 +278,19 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            {savedItems.length > 5 && (
+              <div className="mt-6 text-center">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 font-medium"
+                >
+                  Show more
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
