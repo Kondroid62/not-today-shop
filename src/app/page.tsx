@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { saveItem, getItemsByTrackId } from "@/lib/api";
 import TrackIdManager from "@/components/TrackIdManager";
+import Image from "next/image";
+import Logo from "@/images/not-today-shop-logo.svg";
 
 interface SavedItem {
   id: string;
@@ -128,6 +130,13 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-4xl mx-auto">
         <header className="text-center mb-8 pt-8">
+          <Image
+            src={Logo}
+            alt="Not Today Shop Logo"
+            width={200}
+            height={80}
+            className="mx-auto mb-2"
+          />
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
             Not Today Shop
           </h1>
