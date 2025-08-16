@@ -150,7 +150,7 @@ export default function Home() {
         <TrackIdManager onTrackIdChange={handleTrackIdChange} />
 
         {/* メインカード - グラスモーフィズム */}
-        <div className="backdrop-blur-xl bg-white/20 dark:bg-white/10 border border-white/30 rounded-2xl shadow-2xl p-6 mb-8">
+        <div className="glass-card p-6 mb-8">
           <div className="text-center mb-6">
             <p className="text-sm text-white/80 mb-2">Total Saved</p>
             <p className="text-4xl font-bold text-white drop-shadow-lg">
@@ -160,7 +160,7 @@ export default function Home() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="itemName" className="block text-sm font-medium text-white/90 mb-1">
+              <label htmlFor="itemName" className="glass-label">
                 What did you resist buying?
               </label>
               <input
@@ -168,14 +168,14 @@ export default function Home() {
                 id="itemName"
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
-                className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
+                className="glass-input"
                 placeholder="e.g., Coffee, New shoes, Video game"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="url" className="block text-sm font-medium text-white/90 mb-1">
+              <label htmlFor="url" className="glass-label">
                 Product URL
               </label>
               <input
@@ -183,17 +183,14 @@ export default function Home() {
                 id="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
+                className="glass-input"
                 placeholder="https://example.com/product"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label
-                  htmlFor="price"
-                  className="block text-sm font-medium text-white/90 mb-1"
-                >
+                <label htmlFor="price" className="glass-label">
                   Price
                 </label>
                 <div className="relative">
@@ -205,7 +202,7 @@ export default function Home() {
                     id="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="w-full pl-7 pr-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
+                    className="glass-input pl-7"
                     placeholder="0"
                     step="1"
                     min="0"
@@ -214,14 +211,14 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <label htmlFor="category" className="block text-sm font-medium text-white/90 mb-1">
+                <label htmlFor="category" className="glass-label">
                   Category
                 </label>
                 <select
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white"
+                  className="glass-select"
                 >
                   {CATEGORIES.map((cat) => (
                     <option key={cat} value={cat} className="bg-gray-800 text-white">
@@ -235,7 +232,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full backdrop-blur-md bg-white/25 hover:bg-white/35 border border-white/40 text-white py-3 px-4 rounded-xl transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02]"
+              className="glass-button w-full py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Saving..." : "Add to Savings"}
             </button>
@@ -249,7 +246,7 @@ export default function Home() {
         )}
         
         {!loading && savedItems.length > 0 && (
-          <div className="backdrop-blur-xl bg-white/20 dark:bg-white/10 border border-white/30 rounded-2xl shadow-2xl p-6">
+          <div className="glass-card p-6">
             <h2 className="text-2xl font-bold text-white drop-shadow-lg mb-4">
               Recent Items You Resisted Buying
             </h2>
@@ -257,7 +254,7 @@ export default function Home() {
               {savedItems.slice(0, 5).map((item) => (
                 <div
                   key={item.id}
-                  className="flex justify-between items-center p-4 backdrop-blur-md bg-white/15 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/25 hover:scale-[1.02]"
+                  className="glass-item-card p-4"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
@@ -292,7 +289,7 @@ export default function Home() {
               <div className="mt-6 text-center">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center px-6 py-3 backdrop-blur-md bg-white/25 hover:bg-white/35 border border-white/40 text-white rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:scale-[1.05]"
+                  className="glass-button inline-flex items-center px-6 py-3 hover:scale-[1.05]"
                 >
                   Show more
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
