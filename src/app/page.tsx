@@ -173,7 +173,6 @@ export default function Home() {
                 required
               />
             </div>
-
             <div>
               <label htmlFor="url" className="glass-label">
                 Product URL
@@ -214,18 +213,20 @@ export default function Home() {
                 <label htmlFor="category" className="glass-label">
                   Category
                 </label>
-                <select
-                  id="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="glass-select"
-                >
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat} className="bg-gray-800 text-white">
-                      {cat}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="glass-select"
+                  >
+                    {CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat} className="bg-gray-800 text-white">
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
