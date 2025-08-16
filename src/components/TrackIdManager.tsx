@@ -100,8 +100,8 @@ export default function TrackIdManager({ onTrackIdChange }: TrackIdManagerProps)
   };
 
   return (
-    <div className="space-y-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Track ID Management</h2>
+    <div className="space-y-4 p-6 backdrop-blur-lg bg-white/15 dark:bg-white/10 border border-white/25 rounded-2xl shadow-xl mb-8 transition-all duration-300 hover:bg-white/20">
+      <h2 className="text-xl font-semibold text-white drop-shadow-lg">Track ID Management</h2>
       
       <div className="space-y-2">
         <TrackIdForm 
@@ -111,8 +111,8 @@ export default function TrackIdManager({ onTrackIdChange }: TrackIdManagerProps)
         />
         
         {error && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          <div className="p-3 backdrop-blur-md bg-red-500/20 border border-red-300/30 rounded-xl transition-all duration-300">
+            <p className="text-sm text-red-100 drop-shadow-md">{error}</p>
           </div>
         )}
       </div>

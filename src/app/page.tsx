@@ -129,7 +129,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 p-4">
       <div className="max-w-4xl mx-auto">
         <header className="text-center mb-8 pt-8">
           <Image
@@ -139,27 +139,28 @@ export default function Home() {
             height={80}
             className="mx-auto mb-2"
           />
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-4xl font-bold text-white drop-shadow-lg mb-2">
             Not Today Shop
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white/80 drop-shadow-md">
             Track what you didn&apos;t buy and watch your savings grow!
           </p>
         </header>
 
         <TrackIdManager onTrackIdChange={handleTrackIdChange} />
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+        {/* メインカード - グラスモーフィズム */}
+        <div className="backdrop-blur-xl bg-white/20 dark:bg-white/10 border border-white/30 rounded-2xl shadow-2xl p-6 mb-8">
           <div className="text-center mb-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Total Saved</p>
-            <p className="text-4xl font-bold text-green-600 dark:text-green-400">
+            <p className="text-sm text-white/80 mb-2">Total Saved</p>
+            <p className="text-4xl font-bold text-white drop-shadow-lg">
               ¥{totalSavings}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="itemName" className="block text-sm font-medium text-white/90 mb-1">
                 What did you resist buying?
               </label>
               <input
@@ -167,14 +168,14 @@ export default function Home() {
                 id="itemName"
                 value={itemName}
                 onChange={(e) => setItemName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
                 placeholder="e.g., Coffee, New shoes, Video game"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="url" className="block text-sm font-medium text-white/90 mb-1">
                 Product URL
               </label>
               <input
@@ -182,7 +183,7 @@ export default function Home() {
                 id="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
                 placeholder="https://example.com/product"
               />
             </div>
@@ -191,12 +192,12 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="price"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="block text-sm font-medium text-white/90 mb-1"
                 >
                   Price
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-300">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-white/80">
                     ¥
                   </span>
                   <input
@@ -204,7 +205,7 @@ export default function Home() {
                     id="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="w-full pl-7 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full pl-7 pr-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder-white/60"
                     placeholder="0"
                     step="1"
                     min="0"
@@ -213,17 +214,17 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="category" className="block text-sm font-medium text-white/90 mb-1">
                   Category
                 </label>
                 <select
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  className="w-full px-3 py-2 backdrop-blur-md bg-white/20 border border-white/30 rounded-lg shadow-lg focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white"
                 >
                   {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
+                    <option key={cat} value={cat} className="bg-gray-800 text-white">
                       {cat}
                     </option>
                   ))}
@@ -234,7 +235,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full backdrop-blur-md bg-white/25 hover:bg-white/35 border border-white/40 text-white py-3 px-4 rounded-xl transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02]"
             >
               {loading ? "Saving..." : "Add to Savings"}
             </button>
@@ -243,24 +244,24 @@ export default function Home() {
 
         {loading && (
           <div className="text-center py-8">
-            <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+            <p className="text-white/80">Loading...</p>
           </div>
         )}
         
         {!loading && savedItems.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="backdrop-blur-xl bg-white/20 dark:bg-white/10 border border-white/30 rounded-2xl shadow-2xl p-6">
+            <h2 className="text-2xl font-bold text-white drop-shadow-lg mb-4">
               Recent Items You Resisted Buying
             </h2>
             <div className="space-y-3">
               {savedItems.slice(0, 5).map((item) => (
                 <div
                   key={item.id}
-                  className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-md"
+                  className="flex justify-between items-center p-4 backdrop-blur-md bg-white/15 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/25 hover:scale-[1.02]"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-medium text-gray-900 dark:text-white">
+                      <h3 className="font-medium text-white">
                         {item.itemName}
                       </h3>
                       {item.url && (
@@ -268,7 +269,7 @@ export default function Home() {
                           href={item.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                          className="text-white/80 hover:text-white transition-colors duration-200"
                           title="View product"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -277,11 +278,11 @@ export default function Home() {
                         </a>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-white/70">
                       {item.category} • {formatDate(item.date)}
                     </p>
                   </div>
-                  <div className="text-green-600 dark:text-green-400 font-medium">
+                  <div className="text-green-300 font-bold text-lg drop-shadow-md">
                     ¥{item.price}
                   </div>
                 </div>
@@ -291,7 +292,7 @@ export default function Home() {
               <div className="mt-6 text-center">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 font-medium"
+                  className="inline-flex items-center px-6 py-3 backdrop-blur-md bg-white/25 hover:bg-white/35 border border-white/40 text-white rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:scale-[1.05]"
                 >
                   Show more
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
