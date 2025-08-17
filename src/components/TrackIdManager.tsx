@@ -23,6 +23,7 @@ export default function TrackIdManager({ onTrackIdChange }: TrackIdManagerProps)
   const [records, setRecords] = useState<SupabaseItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isChecking, setIsChecking] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const generateRandomTrackId = () => {
     const timestamp = Date.now().toString(36);
@@ -100,28 +101,35 @@ export default function TrackIdManager({ onTrackIdChange }: TrackIdManagerProps)
   };
 
   return (
-    <div className="space-y-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Track ID Management</h2>
-      
+    <div className="glass-card p-6 mb-8 space-y-4 hover:bg-white/20">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-white drop-shadow-lg">Track ID: <span className="text-green-300 font-bold text-2xl drop-shadow-md">{trackId}</span></h2>
+        <div className="text-sm text-white/70">{records.length} records found</div>
+      </div> 
       <div className="space-y-2">
-        <TrackIdForm 
-          onSubmit={handleTrackIdSubmit}
-          currentTrackId={trackId}
-          isLoading={isChecking}
-        />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsFormOpen(!isFormOpen)}
+            className="glass-button-secondary px-3 py-1 text-sm"
+          >
+            {isFormOpen ? 'Close' : 'Switch to another ID'}
+          </button>
+        </div>
+        
+        {isFormOpen && (
+          <TrackIdForm 
+            onSubmit={handleTrackIdSubmit}
+            currentTrackId={trackId}
+            isLoading={isChecking}
+          />
+        )}
         
         {error && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          <div className="glass-error p-3">
+            <p className="text-sm text-red-100 drop-shadow-md">{error}</p>
           </div>
         )}
       </div>
-      
-      <TrackIdDisplay 
-        trackId={trackId}
-        hasRecords={records.length > 0}
-        recordCount={records.length}
-      />
     </div>
   );
 }
