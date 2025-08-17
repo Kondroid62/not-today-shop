@@ -233,7 +233,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="glass-button w-full py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="glass-button-primary w-full py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Saving..." : "Add to Savings"}
             </button>
@@ -290,7 +290,7 @@ export default function Home() {
               <div className="mt-6 text-center">
                 <Link
                   href="/dashboard"
-                  className="glass-button inline-flex items-center px-6 py-3 hover:scale-[1.05]"
+                  className="glass-button-primary inline-flex items-center px-6 py-3 hover:scale-[1.05]"
                 >
                   Show more
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
